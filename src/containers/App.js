@@ -1,14 +1,11 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { User } from "../components/User";
-import { Page } from "../components/Pages";
-import { getPhotos } from "../actions/PageAction";
+import UserContainer from "../containers/UserContainer";
+import PageContainer from "../containers/PageContainer";
 
 import "./App.css";
 
-class App extends Component {
+export class App extends Component {
   render() {
-    const { page, user, getPhotosActions } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -16,33 +13,10 @@ class App extends Component {
         </header>
 
         <main>
-          <Page
-            photos={page.photos}
-            year={page.year}
-            isFetching={page.isFetching}
-            setYear={getPhotosActions}
-          />
-          <User name={user.name} />
+          <PageContainer />
+          <UserContainer />
         </main>
       </div>
     );
   }
 }
-
-const mapStateToProps = state => {
-  return {
-    user: state.user,
-    page: state.page
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getPhotosActions: year => dispatch(getPhotos(year))
-  };
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
